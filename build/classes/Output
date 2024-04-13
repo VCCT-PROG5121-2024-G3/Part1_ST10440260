@@ -1,0 +1,3 @@
+C:\Users\Joel\AppData\Local\NetBeans\Cache\20\executor-snippets\junit.xml:184: The following error occurred while executing this line:
+C:\Users\Joel\AppData\Local\NetBeans\Cache\20\executor-snippets\junit.xml:128: The <classpath> or <modulepath> for <junit> must include junit.jar if not in Ant's own classpath
+BUILD FAILED (total time: 0 seconds)
