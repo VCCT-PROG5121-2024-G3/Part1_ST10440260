@@ -4,6 +4,10 @@
  */
 package prog5121project1;
 
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,18 +21,23 @@ public class RegisterTest
     
     public RegisterTest()
     {
-       
     }
-
+    
     
     @Test
     public void testValidate()
     {
-        
-        var register = new Register();
-        assertEquals(true, register.Validate("kyl_1","Ch&&sec@ke99!"));
-        assertEquals(false, register.Validate("kyle!!!!!","password" ));
-      
+        System.out.println("Validate");
+    
+        //var register = new Register();
+        boolean expected = true;
+        boolean result = Register.Validate("kyl_1","Ch&&sec@ke99!");
+        assertEquals(expected, result);
+       
+        assertEquals(false, Register.Validate("kyle!!!!!","password" ));
+    
     }
-
 }
+        
+
+ 

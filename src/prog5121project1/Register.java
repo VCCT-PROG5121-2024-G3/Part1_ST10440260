@@ -66,6 +66,11 @@ public static boolean Validate(String Username, String Password)
     String lowerCase = Password.toLowerCase();
     String UpperCase = Password.toUpperCase();
     
+    //Checks to see if a mixture of upper and lowercase characters were used.
+    boolean LowerUpper = ((!Password.equals(lowerCase))) && (!Password.equals(UpperCase));
+    
+    boolean Complexity = ((Check(Password, Num)) && (Check(Password, special)));
+    
     int length = Username.length();
     
     //Check for Username length equal to or less than 5 and if the username contains an underscore 
@@ -78,24 +83,23 @@ public static boolean Validate(String Username, String Password)
     else{
         error = "Username is not correctly formatted, please ensure\n" +
                 "that your username contains an underscore and is no\n" +
-                "more than 5 characters in length.";
+                "more than 5 characters in length.\n";
     } 
          
     //Check Password length 8 or more and contains uppercase and lowercase 
-    if (((Password.length() > 8) && (!Password.equals(lowerCase))) && (!Password.equals(UpperCase)))
+    //Check to see if there are numbers and special characters
+    if (((Password.length() > 8) && (LowerUpper)) && (Complexity))
     {
-        //Check to see if there are numbers and special characters
-        if ((Check(Password, Num)) && (Check(Password, special)))
-        {
-            checkPasswordComplexity = true;  
-        }
-        else{
-            error = error + "\n " + "Password is not correctly formatted, please ensure\n" +
+      
+            checkPasswordComplexity = true;      
+     
+    }
+       else{
+            error = error + "Password is not correctly formatted, please ensure\n" +
                                     "that the password contains at least 8 characters, a\n" +
                                     "capital letter, a number and a special character.";
         }
          
-    }
     //Returns true if the username and password were validated
     if ((userValid)   &&  (checkPasswordComplexity))
     {
