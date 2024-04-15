@@ -37,6 +37,7 @@ if (Validate(Username, Password))
   
   JOptionPane.showMessageDialog(null, "Username and Password are valid.");  
   
+  //recieve first and last name for the following message and for constructing the user object later
   String firstName = JOptionPane.showInputDialog("Input your First Name");
   String lastName = JOptionPane.showInputDialog("Input your Last Name") ;
   
@@ -46,6 +47,7 @@ if (Validate(Username, Password))
   Login.Request(Username, Password, firstName, lastName);
 }
 else {
+    //repeats the method
     Request();
 }
             
@@ -68,7 +70,7 @@ public static boolean Validate(String Username, String Password)
     
     //Checks to see if a mixture of upper and lowercase characters were used.
     boolean LowerUpper = ((!Password.equals(lowerCase))) && (!Password.equals(UpperCase));
-    
+    //Checks to see if the password contains numbers and special characters
     boolean Complexity = ((Check(Password, Num)) && (Check(Password, special)));
     
     int length = Username.length();

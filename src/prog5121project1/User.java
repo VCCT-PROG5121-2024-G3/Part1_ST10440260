@@ -17,10 +17,11 @@ public class User
     private String Password;
     private String firstName;
     private String lastName;
-    
+    //default constructor
     public User(){
         
     }
+    //constructor
     public User (String pUsername, String pPassword, String pFirstName, String pLastName){
         
         Username = pUsername;
