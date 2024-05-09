@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -34,6 +35,7 @@ public static void Request(String Username, String Password, String firstName, S
  if (loginUser)
  {
  JOptionPane.showMessageDialog(null, "Login successful");
+ Kanban.Main(newUser);
  }        
  else
  {
