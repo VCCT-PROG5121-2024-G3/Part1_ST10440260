@@ -49,7 +49,7 @@ public class ObjKan
                "Task Name: " + name + "\n" +
                "Task Description: " + description + "\n" + 
                "Task ID: " + ID + "\n" +
-               "Task Duration: " + String.valueOf(duration) + "\n" 
+               "Task Duration in hours: " + String.valueOf(duration) + "\n" 
                
                ;
     }

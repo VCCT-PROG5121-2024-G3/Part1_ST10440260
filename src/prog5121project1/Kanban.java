@@ -5,15 +5,17 @@
 package prog5121project1;
 
 import java.util.Scanner;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Joel
  */
 public class Kanban
 {
-   
-   
     public static void Main(User user) {
+    //Welcome message   
+    JOptionPane.showMessageDialog(null, "Welcome to EasyKanban");
     //Array that will hold all instances of the objKan object. this allows up to 50 tasks to be created
     Scanner input = new Scanner(System.in);
     
@@ -23,6 +25,9 @@ public class Kanban
     //recieves the amount of tasks the user wants then makes the array that size.
     int Size = input.nextInt();
     ObjKan[] kanban = new ObjKan[Size];
+    
+    String[] taskOptions = {"1", "2", "3"};
+    String[] statusOptions = {"To do", "Doing", "Done"};
     
     //When the option menu is shown for add tasks etc this variable tracks which code to execute
     int choice = 0;
@@ -36,22 +41,19 @@ public class Kanban
     String description;
     String devDetails;
     int duration;
-    String ID;
     String status;
     
     String output;
     
     //Terminates the loop if they choose option 3 or the amount of tasks defined by the size they chose is reached.
-    while ((choice != 3) && (number < Size)) { 
-        System.out.println("Option 1) Add tasks.\n" + 
-                           "Option 2) Show Report.\n" + 
-                           "Option 3) Quit.\n" + 
-                           "Please input a number from 1-3 to select the appropriate option.");
-        choice = input.nextInt();
+    while ((choice != 2) && (number < Size)) { 
+        choice = JOptionPane.showOptionDialog(null,"1) New Task\n" + "2) Show report\n" + "3) Quit", "Select one:", 0, 3,
+                                            null, taskOptions, taskOptions[0]);
         
         //activates if the user chose option 1
-        if (choice == 1) {
+        if (choice == 0) {
             //Recieve user inputs to create the objKan object
+            //==================================================================
             System.out.println("Input task name");
             name = input.nextLine();
             name = input.nextLine();
@@ -66,19 +68,16 @@ public class Kanban
             System.out.println("Input the length of the task in hours");
             duration = input.nextInt();
             
-            System.out.println("1) To do\n" +
-                               "2) Doing\n" + 
-                               "3) Done\n" + 
-                               "Select an option by choosing a number between 1-3");
-            statusChoice = input.nextInt();
+            statusChoice = JOptionPane.showOptionDialog(null,"Select a status from the options below" ,"Option Menu", 0, 3,
+                                            null, statusOptions, statusOptions[0]);
            
             status = assignStatus(statusChoice) ;
-            
                        
-            ID = createTaskID(name, number, devDetails);
             
+            //==================================================================
+            //Object is created if criteria are met. description is less than 50 characters and a valid option is chosen.
             output = execution(name, number, description, devDetails, duration, 
-                               ID, status, kanban);
+                                status, kanban);
             System.out.println(output + "\n");
             
             //if the object was sucessfully made then the output will become task sucessfully captured. This is used to 
@@ -86,27 +85,20 @@ public class Kanban
             //should not increment.
             if (output.equals("Task sucessfully captured")) {
                number = number + 1; 
-            }    
-                
+            }             
           
         }
         //option 2 is under devleopment so this message is issued.
-        if (choice == 2) { 
+        if (choice == 1) { 
         
-            System.out.println("Coming Soon!");
+            JOptionPane.showMessageDialog(null, "Coming soon!");
             
         }
     
     }
-    
-    System.out.println(printTaskDetails(kanban, number));
-    
-    
-    System.out.println("Total duration of tasks: " + String.valueOf(returnTotalHours(kanban, number)));
-    
-        
-    
-     
+    //Output the information of all the objects in the array once the size limit is reached or the program is quit
+    System.out.println(printTaskDetails(kanban, number));  
+    System.out.println("Total duration of tasks is " + String.valueOf(returnTotalHours(kanban, number))+ " hours");
     
     }
     
@@ -114,25 +106,17 @@ public class Kanban
     //and the description is less than 50 characters. Putting it into its own method like this
     //simplifies unit testing later.
     public static String execution(String name, int number, String description,  String devDetails, 
-                                 int duration, String ID, String status, ObjKan[] kanban) {
-        String error = "";
+                                 int duration, String status, ObjKan[] kanban) {
         boolean check = true; 
         String result;
+        String ID;
         
          if (!checkTaskDescription(description)) {
-                check = false;
-                //This constructs a custom error message so that the user knows why their object wasn't constructed.
-                error = "Please enter a task description of 50 characters or less" + "\n";
-            }
-            
-            if (status.equals("error")) {
-               check = false; 
-               //This constructs a custom error message so that the user knows why their object wasn't constructed.
-               error = error + "Task status choice must be an integer between 1 and 3" + "\n";
+                check = false;  
             }
                 
             if (check) {
-            
+                ID = createTaskID(name, number, devDetails);
                 kanban[number] = new ObjKan(name, number, description, devDetails, duration, ID, status);
                 result = "Task sucessfully captured";
                 
@@ -140,20 +124,19 @@ public class Kanban
                 
             }
             else {
-                result = error;
+                result = "Please enter a task description of 50 characters or less";
             }
             return result;
         
     }
-    //Takes statusChoice and returns the appropriate string that corrolates to that choice. if "error" is returned 
-    //an error message will be issued to the user and the object will not be created.
+    //Takes statusChoice and returns the appropriate string that corrolates to that choice.
     public static String assignStatus(int statusChoice) {
      
         return switch (statusChoice){
-            case 1 -> "To do";
-            case 2 -> "Doing";
-            case 3 -> "Done";
-            default -> "error";
+            case 0 -> "To do";
+            case 1 -> "Doing";
+            case 2 -> "Done";
+            default -> null;
         };
         
     }
