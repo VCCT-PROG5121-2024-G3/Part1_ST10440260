@@ -120,7 +120,7 @@ public class Kanban
                 kanban[number] = new ObjKan(name, number, description, devDetails, duration, ID, status);
                 result = "Task sucessfully captured";
                 
-                System.out.println(kanban[number].toString());
+               JOptionPane.showMessageDialog(null,kanban[number].toString());
                 
             }
             else {

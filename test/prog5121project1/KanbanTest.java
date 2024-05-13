@@ -27,12 +27,14 @@ public class KanbanTest
     public void testMain()
     {
         
+    
+        
     }
     
     @Test
     public void testExecution1()
     {
-        System.out.println("execution 1");
+        System.out.println("test case 2");
         String name = "Login Feature";
         int number = 0;
         String description = "Create login to authenticate users";
@@ -43,6 +45,8 @@ public class KanbanTest
         String expResult = "Task sucessfully captured";
         String result = Kanban.execution(name, number, description, devDetails, duration, status, kanban);
         assertEquals(expResult, result);
+        
+       
        
         if (result.equals("Please enter a task description of 50 characters or less")) {
         fail("failure test 1");
@@ -52,18 +56,23 @@ public class KanbanTest
      @Test
     public void testExecution2()
     {
-        System.out.println("execution 2");
+        System.out.println("test case 1");
         String name = "Add Task Feature";
-        int number = 0;
+        int number = 1;
         String description = "Create Add Task feature to add task users";
         String devDetails = "Mike Smith";
         int duration = 10;
         String status = "Doing";
-        ObjKan[] kanban = new ObjKan[1];
+        ObjKan[] kanban = new ObjKan[2];
         String expResult = "Task sucessfully captured";
         String result = Kanban.execution(name, number, description, devDetails, duration, status, kanban);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
+        
+        //expResult = "AD:1:BYN";
+        //result = Kanban.createTaskID(name,number,devDetails);
+        
+        //assertEquals(expResult, result);
+      
          if (result.equals("Please enter a task description of 50 characters or less")) {
         fail("failure test 2");
         }
