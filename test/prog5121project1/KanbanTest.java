@@ -4,10 +4,7 @@
  */
 package prog5121project1;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -34,29 +31,50 @@ public class KanbanTest
     @Test
     public void testExecution1()
     {
-        System.out.println("test case 2");
+        System.out.println("Test case 1");
         String name = "Login Feature";
         int number = 0;
         String description = "Create login to authenticate users";
         String devDetails = "Robyn Harrison";
         int duration = 8;
         String status = "To DO";
-        ObjKan[] kanban = new ObjKan[1];
+        ObjKan[] kanban = new ObjKan[2];
         String expResult = "Task sucessfully captured";
-        String result = Kanban.execution(name, number, description, devDetails, duration, status, kanban);
+        String result = Kanban.execution(name, number, description, 
+                                         devDetails, duration, status, kanban);
         assertEquals(expResult, result);
-        
-       
-       
-        if (result.equals("Please enter a task description of 50 characters or less")) {
+    
+        if (result.equals("Please enter a task description of 50 "
+                + "characters or less")) {
         fail("failure test 1");
         }
     }
+    @Test
+    public void testCreateTaskID1() { 
+        System.out.println("Test ID 1");
+        String name = "Login Feature";
+        int number = 0;
+        String devDetails = "Robyn Harrison"; 
+        String expResult = "LO:0:BYN";
+        String result = Kanban.createTaskID(name, number, devDetails);
+        assertEquals(expResult,result);
+    }
     
-     @Test
+    @Test
+    public void testCreateTaskID2() { 
+        System.out.println("Test ID 2");
+        String name = "Add Task Feature";
+        int number = 1;
+        String devDetails = "Mike Smith"; 
+        String expResult = "AD:1:IKE";
+        String result = Kanban.createTaskID(name, number, devDetails);
+        assertEquals(expResult,result);
+    }
+    
+    @Test
     public void testExecution2()
     {
-        System.out.println("test case 1");
+        System.out.println("test case 2");
         String name = "Add Task Feature";
         int number = 1;
         String description = "Create Add Task feature to add task users";
@@ -65,15 +83,12 @@ public class KanbanTest
         String status = "Doing";
         ObjKan[] kanban = new ObjKan[2];
         String expResult = "Task sucessfully captured";
-        String result = Kanban.execution(name, number, description, devDetails, duration, status, kanban);
+        String result = Kanban.execution(name, number, description, devDetails,
+                                        duration, status, kanban);
         assertEquals(expResult, result);
-        
-        //expResult = "AD:1:BYN";
-        //result = Kanban.createTaskID(name,number,devDetails);
-        
-        //assertEquals(expResult, result);
-      
-         if (result.equals("Please enter a task description of 50 characters or less")) {
+              
+         if (result.equals("Please enter a task description of 50 characters "
+                 + "or less")) {
         fail("failure test 2");
         }
     

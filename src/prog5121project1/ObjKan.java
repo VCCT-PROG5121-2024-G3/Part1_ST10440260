@@ -10,7 +10,7 @@ package prog5121project1;
  */
 public class ObjKan
 {
-    //attributes
+//------------------------------Attributes--------------------------------------
     private String name;
     private int number;
     private String description;
@@ -19,11 +19,10 @@ public class ObjKan
     private String ID;
     private String status;
     
-    public ObjKan(){
-        
-    }
-    //Constructor
-    public ObjKan(String pname, int pnumber, String pdescription, String pdevDetails, int pduration, String pID, String pstatus){
+ 
+//-----------------------------Constructors-------------------------------------
+    public ObjKan(String pname, int pnumber, String pdescription, 
+                 String pdevDetails, int pduration, String pID, String pstatus){
     
             name = pname;
             number = pnumber;
@@ -33,7 +32,9 @@ public class ObjKan
             ID = pID;
             status = pstatus;
     }
+    public ObjKan(){}
     
+//--------------------------Functions and methods-------------------------------       
     //Returns the duration attribute.
     public int returnDuration() {
     
@@ -53,5 +54,5 @@ public class ObjKan
                
                ;
     }
-    
+//--------------------------------End of file-----------------------------------
 }
