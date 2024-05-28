@@ -40,12 +40,12 @@ jobs:
        # copy compiled classes to test directory 
       - name : copy compiled classes to testresources directory 
         working-directory: ./src/prog5121project1
-        run: cp -t  "../../test/poe_task2" Login.class
+        run: cp -t  "../../test/prog5121project1" Kanban.class
       
         #copy compiled tests 
       - name : copy compiled Test classes to testresources directory 
         working-directory: ./test/prog5121project1
-        run: cp -t  "../../testresources/" LoginTest.class
+        run: cp -t  "../../testresources/" KanbanTest.class
         
         # list contents or directory
       - name: List contents test package
