@@ -28,7 +28,7 @@ jobs:
         run: ls
      # Compiles classes to test 
       - name: compile classes
-        working-directory: ./test/Prog5121project1/KanbanTest
+        working-directory: ./test/prog5121project1/KanbanTest
         run: javac -cp "../testresources/junit-platform-console-standalone-1.8.2.jar" ./poe_task2/Login.java ./poe_task2/Users.java  "../test/poe_task2/LoginTest.java"  
 
     # list contents of src to verify that classess compiled 
