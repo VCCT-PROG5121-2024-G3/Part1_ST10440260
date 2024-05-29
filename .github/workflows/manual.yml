@@ -1,3 +1,5 @@
+# This is a basic workflow that is manually triggered
+
 name: TestPROGPOE
 
 # Controls when the workflow will run
@@ -29,7 +31,7 @@ jobs:
      # Compiles classes to test 
       - name: compile classes
         working-directory: ./src
-        run: javac -cp "../testresources/junit-platform-console-standalone-1.8.2.jar" ./prog5121project1/Kanban.java "../test/prog5121project1/KanbanTest.java"  
+        run: javac -cp "../testresources/junit-platform-console-standalone-1.8.2.jar" ./prog5121project1/Kanban.java ./prog5121project1/ObjKan.java  "../test/prog5121project1/KanbanTest.java"  
 
     # list contents of src to verify that classess compiled 
       - name: List contents of src directory after compile
@@ -39,12 +41,12 @@ jobs:
         
        # copy compiled classes to test directory 
       - name : copy compiled classes to testresources directory 
-        working-directory: ./src/prog5121project1
+        working-directory: ./src/prog5121project
         run: cp -t  "../../test/prog5121project1" Kanban.class
       
         #copy compiled tests 
       - name : copy compiled Test classes to testresources directory 
-        working-directory: ./test/prog5121project1
+        working-directory: ./test/prog5121project
         run: cp -t  "../../testresources/" KanbanTest.class
         
         # list contents or directory
@@ -64,4 +66,4 @@ jobs:
         working-directory: ./test
         run: |
          ls
-         java -jar  "../testresources/junit-platform-console-standalone-1.6.0.jar" -cp "." --select-class   prog5121project1.KanbanTest   
+         java -jar  "../testresources/junit-platform-console-standalone-1.6.0.jar" -cp "." --select-class  prog5121project1.KanbanTest 
