@@ -30,8 +30,8 @@ jobs:
         run: ls
      # Compiles classes to test 
       - name: compile classes
-        working-directory: ./src
-        run: javac -cp "../testresources/junit-platform-console-standalone-1.8.2.jar" ./prog5121project1/Kanban.java ./prog5121project1/ObjKan.java  "../test/prog5121project1/KanbanTest.java"  
+       
+        run: javac -cp "../testresources/junit-platform-console-standalone-1.8.2.jar" ./src/prog5121project1/Kanban.java ./src/prog5121project1/ObjKan.java  ./test/prog5121project1/KanbanTest.java  
 
     # list contents of src to verify that classess compiled 
       - name: List contents of src directory after compile
