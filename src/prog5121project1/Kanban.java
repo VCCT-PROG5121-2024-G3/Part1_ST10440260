@@ -31,6 +31,16 @@ public class Kanban
     String[] taskOptions = {"1", "2", "3"};
     String[] statusOptions = {"To do", "Doing", "Done"};
     
+    //Arrays used for the "show report" feature
+    String[] aDeveloper = new String[Size];
+    String[] aTaskNames = new String[Size];
+    String[] aTaskID = new String[Size];
+    Integer[] aDuration = new Integer[Size];
+    String[] aTaskStatus = new String[Size];
+    
+    Integer TasksDeleted;
+    
+    
     //When the option menu is shown for add tasks etc this variable tracks which 
     //code to execute
     int choice = 0;
@@ -63,6 +73,7 @@ public class Kanban
             System.out.println("Input task name");
             name = input.nextLine();
             name = input.nextLine();
+            aTaskNames[number] = name;
             
             System.out.println("Input task description of " +
                                "less than 50 characters");
@@ -71,15 +82,19 @@ public class Kanban
             System.out.println("Input the first and last name of the\n" +
                                "developer assigned to this task");
             devDetails = input.nextLine();
+            //New feature for the report
+            aDeveloper[number] = devDetails;
             
             System.out.println("Input the length of the task in hours");
             duration = input.nextInt();
+            aDuration[Size] = duration;
             
             statusChoice = JOptionPane.showOptionDialog(null,
                   "Select a status from the options below" 
                   ,"Option Menu", 0, 3, null, statusOptions, statusOptions[0]);
            
             status = assignStatus(statusChoice) ;
+            aTaskStatus[Size] = status;
                        
             
 //-----------------------------Task creation------------------------------------
@@ -95,11 +110,22 @@ public class Kanban
             //counter should not increment.
             if (output.equals("Task sucessfully captured")) {
                number = number + 1; 
+               aTaskID[Size] = createTaskID(name, number, devDetails);
             }              
         }
         //option 2 is under devleopment so this message is issued.
         if (choice == 1) { 
-            JOptionPane.showMessageDialog(null, "Coming soon!");      
+            if (number == 0) {
+                JOptionPane.showMessageDialog(null, "You must create tasks "
+                        + "before using the show report feature");
+                  
+            }
+            else {
+            TasksDeleted = ShowReport.Main(aDeveloper,aTaskNames,aTaskID,
+                    aDuration,aTaskStatus, Size,kanban);
+            number = number - TasksDeleted;
+            Size = Size - TasksDeleted;
+            }
         }
     }
 //------------------------------Final output------------------------------------
@@ -108,6 +134,8 @@ public class Kanban
     System.out.println(printTaskDetails(kanban, number));  
     System.out.println("Total duration of tasks is " + 
                     String.valueOf(returnTotalHours(kanban, number))+ " hours");
+    ShowReport.Main(aDeveloper,aTaskNames,aTaskID,aDuration,aTaskStatus,Size,
+                    kanban);
     
     }
    
@@ -131,6 +159,7 @@ public class Kanban
         if (check) {
            kanban[number] = new ObjKan(name, number, description, devDetails, 
                                        duration, ID, status);
+           
            result = "Task sucessfully captured";
                 
            JOptionPane.showMessageDialog(null,kanban[number].toString());
