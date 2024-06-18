@@ -25,19 +25,13 @@ public class Kanban
                        "Please input an integer value.");
     //recieves the amount of tasks the user wants then makes the array that 
     //size.
-    int Size = input.nextInt();
-    ObjKan[] kanban = new ObjKan[Size];
+    int size = input.nextInt();
+    ObjKan[] kanban = new ObjKan[size];
     
     String[] taskOptions = {"1", "2", "3"};
     String[] statusOptions = {"To do", "Doing", "Done"};
     
-    //Arrays used for the "show report" feature
-    String[] aDeveloper = new String[Size];
-    String[] aTaskNames = new String[Size];
-    String[] aTaskID = new String[Size];
-    Integer[] aDuration = new Integer[Size];
-    String[] aTaskStatus = new String[Size];
-    
+    //Tracks the count of tasks deleted and adjusts the size of the array.
     Integer TasksDeleted;
     
     
@@ -51,7 +45,7 @@ public class Kanban
     
     //These variables will be used for object construction.
     String name;
-    int number = 0;
+    int count = 0;
     String description;
     String devDetails;
     int duration;
@@ -62,7 +56,7 @@ public class Kanban
 //----------------------------------Task loop-----------------------------------
     //Terminates the loop if they choose option 3 or the amount of tasks defined 
     //by the size they chose is reached.
-    while ((choice != 2) && (number < Size)) { 
+    while ((choice != 2) && (count < size)) { 
         choice = JOptionPane.showOptionDialog(null,"1) New Task\n" + 
                             "2) Show report\n" + "3) Quit", "Select one:", 0, 3,
                             null, taskOptions, taskOptions[0]);
@@ -73,7 +67,6 @@ public class Kanban
             System.out.println("Input task name");
             name = input.nextLine();
             name = input.nextLine();
-            aTaskNames[number] = name;
             
             System.out.println("Input task description of " +
                                "less than 50 characters");
@@ -82,25 +75,20 @@ public class Kanban
             System.out.println("Input the first and last name of the\n" +
                                "developer assigned to this task");
             devDetails = input.nextLine();
-            //New feature for the report
-            aDeveloper[number] = devDetails;
             
             System.out.println("Input the length of the task in hours");
             duration = input.nextInt();
-            aDuration[Size] = duration;
             
             statusChoice = JOptionPane.showOptionDialog(null,
                   "Select a status from the options below" 
                   ,"Option Menu", 0, 3, null, statusOptions, statusOptions[0]);
            
-            status = assignStatus(statusChoice) ;
-            aTaskStatus[Size] = status;
-                       
+            status = assignStatus(statusChoice) ;                     
             
 //-----------------------------Task creation------------------------------------
             //Object is created if criteria are met. description is less than 
             //50 characters and a valid option is chosen.
-            output = execution(name, number, description, devDetails, duration, 
+            output = execution(name, count, description, devDetails, duration, 
                                 status, kanban);
             System.out.println(output + "\n");
             
@@ -109,64 +97,62 @@ public class Kanban
             //should increment the counter. if no object was created then the 
             //counter should not increment.
             if (output.equals("Task sucessfully captured")) {
-               number = number + 1; 
-               aTaskID[Size] = createTaskID(name, number, devDetails);
+               count = count + 1; 
+           
             }              
         }
         //option 2 is under devleopment so this message is issued.
         if (choice == 1) { 
-            if (number == 0) {
+            if (count == 0) {
                 JOptionPane.showMessageDialog(null, "You must create tasks "
                         + "before using the show report feature");
                   
             }
             else {
-            TasksDeleted = ShowReport.Main(aDeveloper,aTaskNames,aTaskID,
-                    aDuration,aTaskStatus, Size,kanban);
-            number = number - TasksDeleted;
-            Size = Size - TasksDeleted;
+            TasksDeleted = ShowReport.Main(count, kanban);
+            count = count - TasksDeleted;
             }
         }
     }
 //------------------------------Final output------------------------------------
     //Output the information of all the objects in the array 
     //once the size limit is reached or the program is quit
-    System.out.println(printTaskDetails(kanban, number));  
+    count = count - 1;
+    System.out.println(printTaskDetails(kanban, count));  
     System.out.println("Total duration of tasks is " + 
-                    String.valueOf(returnTotalHours(kanban, number))+ " hours");
-    ShowReport.Main(aDeveloper,aTaskNames,aTaskID,aDuration,aTaskStatus,Size,
-                    kanban);
-    
+    String.valueOf(returnTotalHours(kanban, count))+ " hours");
+    ShowReport.Main(count,kanban);
     }
-   
 //-------------------------------Methods----------------------------------------
     //This method creates the object if the description is less than 50 
     //characters. Putting it into its own method like this simplifies unit 
     //testing later.
-    public static String execution(String name, int number, String description, 
+    public static String execution(String name, int count, String description, 
               String devDetails, int duration, String status, ObjKan[] kanban) {
         boolean check = true; 
-        String result;
-        String ID = createTaskID(name, number, devDetails);
+        String result = null;
+        String ID = createTaskID(name, count, devDetails);
         
         if (!checkTaskDescription(description)) {
+           result = "Please enter a task description of 50 characters or less ";
            check = false;  
         }
         if (ID.equals("error")) {
+            result = result + "Invalid ID";
             check = false;
         } 
                 
         if (check) {
-           kanban[number] = new ObjKan(name, number, description, devDetails, 
+           kanban[count] = new ObjKan(name, count, description, devDetails, 
                                        duration, ID, status);
            
            result = "Task sucessfully captured";
                 
-           JOptionPane.showMessageDialog(null,kanban[number].toString());
+           JOptionPane.showMessageDialog(null,kanban[count].toString());
                 
         }
         else {
-            result = "Please enter a task description of 50 characters or less";
+         
         }
         return result;
         
@@ -190,9 +176,10 @@ public class Kanban
     }
     
     //Creates the taskID based on the criteria of the project. first to 
-    //characters of the task name, a colon, the task number, a colon then the 
+    //characters of the task name, a colon, the task count, a colon then the 
     //last 3 leters of the developers first and last name.
-    public static String createTaskID(String name, int number, String devDetails) {
+    public static String createTaskID(String name, int count,
+                                      String devDetails) {
         String ID;
         String firstName;
         int spacePosition = devDetails.indexOf(" ");
@@ -211,15 +198,15 @@ public class Kanban
             check = false;
         }
         if (name.length() < 2) {
-       JOptionPane.showMessageDialog(null, "");
+       JOptionPane.showMessageDialog(null, "name is too short");
        check = false;
         }
-        if (check) {
+        if (!check) {
             return "error";
         }
     
         ID = name.substring(0,2) + ":";
-        ID = ID + String.valueOf(number) + ":";
+        ID = ID + String.valueOf(count) + ":";
         ID = ID + firstName.substring(firstName.length() - 3, 
                                       firstName.length());
         return ID.toUpperCase();

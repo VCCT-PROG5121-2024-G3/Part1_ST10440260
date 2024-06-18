@@ -6,7 +6,7 @@ package prog5121project1;
 
 /**
  *
- * @author Joel
+ * @author Joel Fredrick May ST10440260@vcconnect.edu.za
  */
 public class ObjKan
 {
@@ -34,12 +34,33 @@ public class ObjKan
     }
     public ObjKan(){}
     
-//--------------------------Functions and methods-------------------------------       
-    //Returns the duration attribute.
-    public int returnDuration() {
-    
-    return duration;
+//--------------------------Functions and methods-------------------------------   
+    //Returns a variety of attributes of the object
+    public String returnName() {
+        return name;
     }
+    
+    public String returnDescription() {
+        return description;
+    }
+    
+    public String returnDevDetails() {
+        return devDetails;
+    }
+    
+    public int returnDuration() {
+        return duration;
+    }
+    
+    public String returnID() {
+        return ID;
+    }
+    
+    public String returnStatus() {
+        return status;
+    }
+    
+    
     
     //Prints all of the information of the object.
     public String toString(){
