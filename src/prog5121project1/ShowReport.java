@@ -46,16 +46,17 @@ public class ShowReport
         while (choice != 7) {
               for (int i = 0; i < count; i++)
            
-            System.out.println("Input an integer between 1-7 to select a\n" +
-                               "  report to see");
-            
-            System.out.println("(1): All Tasks that are complete\n" + 
+ 
+            //A menu for the user to choose from by inputting an integer.
+            System.out.println("Input an integer between 1-7 to select a " + 
+                               "report to see\n\n" +   
+            "(1): All Tasks that are complete\n" + 
             "(2): Developer with the longest task duration\n" +
             "(3): Search for a task by name\n" + 
             "(4): All tasks assigned to a specific developer\n" + 
             "(5): Delete a task by task name\n" + 
             "(6): All details of captured tasks\n" + 
-            "(7): Exit");
+            "(7): Exit\n");
             choice = input.nextInt();
             //Switch statement parses the user input to activate the appropriate
             //method
@@ -113,6 +114,7 @@ public class ShowReport
     String[] names, String[] status,String[] developer,Integer[] duration){
         String result = "";
         
+        //Searches the status array for instances of "Done"
         for (int i = 0; i <= count; i++) {
             if (status[i].equals("Done")){
             result = result + "Task Name: " + names[i] + "\n" +
@@ -128,6 +130,10 @@ public class ShowReport
     Integer[] duration, String[] developer) {
         Integer largestInt = 0;
         String result = "";
+        
+        //Tracks the current largest integer with the largest int variable.
+        //Whenever a duration is found thats greater than largest int largest
+        //int gets updated and the return message is updated aswell
         for (int i = 0; i <= count; i++) {
             if (duration[i] > largestInt) {
                 largestInt = duration[i];
@@ -144,11 +150,12 @@ public class ShowReport
     //a hit the details will be added to the result variable to be returned.
     public static String SearchbyName(ObjKan[] kanban,Integer count,
     String[] names,String[] developer,String[] status) {
-    
+        //If no match is found this message will be returned.
         String result = "Please enter an actual task name" + "\n";
         String search;
         search = JOptionPane.showInputDialog(null, "Please input a task name");
         
+        //Looks for a match in the names array.
         for (int i = 0; i <= count; i++) {
             if (names[i].equals(search)) {
                 result = "Task Name: " + names[i] + "\n" +
@@ -168,6 +175,7 @@ public class ShowReport
         boolean found = false;
         search = JOptionPane.showInputDialog(null, "Please input a Developer "
                                               + "name");
+        //Searches the developer array for a match
         for (int i = 0; i <= count; i++) {
             if (developer[i].equals(search)) {
                 found = true;
@@ -175,6 +183,7 @@ public class ShowReport
                         + "Status: " + status[i] + "\n";
             }
         }
+        //Error feedback
         if (!found) {
            result = "Please input an actual developer name" + "\n";
         }
@@ -192,18 +201,23 @@ public class ShowReport
         boolean found = false;
         search = JOptionPane.showInputDialog(null, "Please input a Task name "+
                                             "to delete");
+            //Searches for the inputted name
             for (int i = 0; i <= count; i++) {
                 if (names[i].equals(search)) {
                     found = true;            
                     if (i < count) { 
                         position = i;
+                        //Overwrites the current position with the position
+                        //higher then continues until the end of the array.
                         for (int j = position; j < count; j++) {
                             kanban[j] = kanban[j+1];
                         }
                     }
-             
+                    //Removes the duplicate object that is created by the
+                    //overwrite process.
                     kanban[count] = new ObjKan("",count,"","",0,"","");   
-              
+                    
+                    //Update the parralel arrays to reflect the ObjKan array
                     for (int k = 0; k <= count; k++)
                     {
                         developer[k] = kanban[k].returnDevDetails();
@@ -214,10 +228,12 @@ public class ShowReport
                     }    
                 } 
             }
+        //Success feedback
         if (found) {
             JOptionPane.showMessageDialog(null, "Task " + search + 
                                                 " sucessfully deleted");
         }
+        //Error feedback
         else {
             JOptionPane.showMessageDialog(null, "Task not found");
         }
