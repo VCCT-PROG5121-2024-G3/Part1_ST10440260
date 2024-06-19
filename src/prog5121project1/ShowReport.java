@@ -202,20 +202,21 @@ public class ShowReport
                         }
                     }
              
-                    kanban[count] = null;   
+                    kanban[count] = new ObjKan("",count,"","",0,"","");   
               
                     for (int k = 0; k <= count; k++)
                     {
-                        developer[i] = kanban[i].returnDevDetails();
-                        names[i] = kanban[i].returnName();
-                        ID[i] = kanban[i].returnID();
-                        duration[i] = kanban[i].returnDuration();
-                        status[i] = kanban[i].returnStatus();
+                        developer[k] = kanban[k].returnDevDetails();
+                        names[k] = kanban[k].returnName();
+                        ID[k] = kanban[k].returnID();
+                        duration[k] = kanban[k].returnDuration();
+                        status[k] = kanban[k].returnStatus();
                     }    
                 } 
             }
         if (found) {
-            JOptionPane.showMessageDialog(null, "Task sucessfully deleted");
+            JOptionPane.showMessageDialog(null, "Task " + search + 
+                                                " sucessfully deleted");
         }
         else {
             JOptionPane.showMessageDialog(null, "Task not found");
